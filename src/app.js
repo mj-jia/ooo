@@ -1,4 +1,4 @@
-import * as ort from './vendor/ort.all.min.mjs';
+import * as ort from '../vendor/ort.all.min.mjs';
 
 /* ---------------- 模型配置 ---------------- */
 const MODELS = {
@@ -24,7 +24,7 @@ const SCALE = 4;   // 两个模型都是 4 倍
 const TILE = 256;  // 单块输入边长
 const MARGIN = 24; // 每块向四周多读的上下文
 
-ort.env.wasm.wasmPaths = new URL('./vendor/', import.meta.url).href;
+ort.env.wasm.wasmPaths = new URL('../vendor/', import.meta.url).href;
 ort.env.logLevel = 'error';
 
 /* ---------------- DOM ---------------- */

@@ -1,0 +1,61 @@
+{
+  "$comment": "模型清单。校验方式：npm run verify（比对 sha256 与字节数）。新增模型时同步更新此文件与 src/app.js 的 MODELS 表。",
+  "version": 1,
+  "models": [
+    {
+      "key": "fast",
+      "label": "均衡 · x4v3",
+      "file": "realesr-general-x4v3.onnx",
+      "bytes": 4866417,
+      "sha256": "1940a93ee08283a0a7286183186357b1688fe9fa8ede74604b424586aaddf112",
+      "scale": 4,
+      "input": { "name": "input", "shape": [1, 3, "height", "width"] },
+      "output": { "name": "output", "shape": [1, 3, "height_x4", "width_x4"] },
+      "params_million": 1.21,
+      "opset": 17,
+      "normalization": "内建：输入按 [0,1]，模型内部完成归一化",
+      "maxInputSide": 1280,
+      "upstream": "xinntao/Real-ESRGAN · realesr-general-x4v3",
+      "converted_by": "https://huggingface.co/CoderViking/realesr-general-x4v3-onnx",
+      "license": "BSD-3-Clause",
+      "note": "轻量 SRVGGNetCompact 结构，34 个卷积，适合日常使用与移动端"
+    },
+    {
+      "key": "high",
+      "label": "高质量 · x4plus",
+      "file": "upscaler-x4.onnx",
+      "bytes": 69179144,
+      "sha256": "dc7d65199ac5e2182d4bd0c121d8d7c9b0a3e734fa51ae246c96a7a006077e32",
+      "scale": 4,
+      "input": { "name": "rgb", "shape": [1, 3, "h", "w"] },
+      "output": { "name": "rgb_out", "shape": [1, 3, "4*h", "4*w"] },
+      "params_million": 16.7,
+      "opset": 20,
+      "normalization": "内建：模型中已包含预处理与后处理，直接喂 [0,1] 即可",
+      "maxInputSide": 640,
+      "upstream": "xinntao/Real-ESRGAN · RealESRGAN_x4plus",
+      "converted_by": "https://huggingface.co/smile-forge/real-esrgan-gfpgan-onnx",
+      "license": "BSD-3-Clause",
+      "note": "RRDB 结构，1094 个节点。计算量大，建议有独立显卡时使用"
+    }
+  ],
+  "runtime": {
+    "name": "onnxruntime-web",
+    "version": "1.31.1",
+    "license": "MIT",
+    "files": {
+      "ort.all.min.mjs": {
+        "bytes": 823307,
+        "sha256": "d95eb420c46e4e2b72a83aa906ff9a06baa9223a7809c8ce1c905b4c1ddedfa5"
+      },
+      "ort-wasm-simd-threaded.jsep.mjs": {
+        "bytes": 47250,
+        "sha256": "7838b4b2e77d6f1a739cd0de800e7f18a089328b365e6af4d416a88a94fd7fd3"
+      },
+      "ort-wasm-simd-threaded.jsep.wasm": {
+        "bytes": 29520971,
+        "sha256": "5ab8361783822d02a57d1e97cf2514bceb451a628f2b29ae0d7b6e618201ff8f"
+      }
+    }
+  }
+}

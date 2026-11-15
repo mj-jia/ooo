@@ -1,0 +1,5 @@
+# 仅 tools/*.py 需要，页面本身不需要任何 Python 依赖
+onnx>=1.16
+onnxruntime>=1.18
+numpy>=1.26
+pillow>=10.0

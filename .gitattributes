@@ -1,0 +1,10 @@
+# 统一按 LF 存储，Windows 下检出时也不转 CRLF（前端资源对行尾不敏感，但避免 diff 噪音）
+* text=auto eol=lf
+
+# 二进制文件不做行尾转换与文本 diff
+*.onnx binary
+*.wasm binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary

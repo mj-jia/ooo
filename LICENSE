@@ -22,6 +22,22 @@ SOFTWARE.
 
 ---
 
-The bundled model file models/upscaler-x4.onnx is a conversion of
-Real-ESRGAN x4plus weights by Xintao Wang et al., licensed under
-BSD-3-Clause. See https://github.com/xinntao/Real-ESRGAN
+Third-party components bundled in this repository are NOT covered by the MIT
+license above:
+
+1. models/upscaler-x4.onnx
+   ONNX conversion of Real-ESRGAN x4plus weights by Xintao Wang et al.,
+   licensed under BSD-3-Clause.
+   https://github.com/xinntao/Real-ESRGAN
+   https://huggingface.co/smile-forge/real-esrgan-gfpgan-onnx
+
+2. models/realesr-general-x4v3.onnx
+   ONNX conversion of Real-ESRGAN realesr-general-x4v3 weights by Xintao Wang
+   et al., licensed under BSD-3-Clause.
+   https://github.com/xinntao/Real-ESRGAN
+   https://huggingface.co/CoderViking/realesr-general-x4v3-onnx
+
+3. vendor/ort*.mjs, vendor/ort-wasm-simd-threaded.jsep.wasm
+   ONNX Runtime Web 1.31.1, Copyright (c) Microsoft Corporation,
+   licensed under the MIT License.
+   https://github.com/microsoft/onnxruntime
