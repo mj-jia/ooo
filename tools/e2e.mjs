@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const EDGE = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
-const URL_BASE = 'http://127.0.0.1:8123/';
+const URL_BASE = process.env.SITE_URL || 'http://127.0.0.1:8123/';
 const IMG = process.argv[2] || 'tools/out/small128.png';
 const MODEL = process.argv[3] || 'fast';
 const OUT = 'tools/out';
