@@ -1,0 +1,10 @@
+# 依赖与构建产物
+node_modules/
+
+# 参考实现的中间结果
+tools/out/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini

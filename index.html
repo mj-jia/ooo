@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>图片变清晰 · Real-ESRGAN 4x</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232563eb'/%3E%3Cpath d='M9 16h14M16 9v14' stroke='white' stroke-width='2.6' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='10.5' fill='none' stroke='white' stroke-width='2'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<header class="top">
+  <h1>图片变清晰</h1>
+  <p class="sub">Real-ESRGAN 4 倍放大 · 全部在你的浏览器里跑，图片不会上传到任何服务器</p>
+</header>
+
+<main>
+  <!-- 上传区 -->
+  <section id="drop" class="drop" tabindex="0">
+    <input type="file" id="file" accept="image/*" hidden />
+    <div class="drop-inner">
+      <svg viewBox="0 0 24 24" class="drop-icon" aria-hidden="true">
+        <path d="M12 16V4m0 0L8 8m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="drop-title">把图片拖进来，或点击选择</p>
+      <p class="drop-hint">支持 JPG / PNG / WebP，建议原图长边不超过 1024 像素</p>
+    </div>
+  </section>
+
+  <!-- 工作区 -->
+  <section id="work" class="work" hidden>
+    <div class="compare-wrap">
+      <div class="compare" id="compare">
+        <canvas id="cvBefore" class="layer"></canvas>
+        <canvas id="cvAfter" class="layer"></canvas>
+        <div class="handle" id="handle"></div>
+        <span class="tag tag-l">原图</span>
+        <span class="tag tag-r">变清晰</span>
+      </div>
+      <input type="range" id="slider" min="0" max="100" value="50" class="slider" aria-label="对比滑块" />
+    </div>
+
+    <aside class="side">
+      <dl class="meta">
+        <div><dt>文件名</dt><dd id="mName">—</dd></div>
+        <div><dt>原图尺寸</dt><dd id="mSize">—</dd></div>
+        <div><dt>输出尺寸</dt><dd id="mOut">—</dd></div>
+        <div><dt>推理设备</dt><dd id="mDev">—</dd></div>
+        <div><dt>耗时</dt><dd id="mTime">—</dd></div>
+      </dl>
+
+      <label class="field">
+        <span>模型</span>
+        <select id="model" class="model-sel">
+          <option value="fast" selected>均衡 · x4v3（4.7 MB，快）</option>
+          <option value="high">高质量 · x4plus（66 MB，慢）</option>
+        </select>
+        <small id="modelNote" class="hint"></small>
+      </label>
+
+      <label class="field">
+        <span>放大倍数</span>
+        <select id="scale">
+          <option value="4" selected>4 倍（模型原生）</option>
+          <option value="2">2 倍（4 倍后缩回）</option>
+        </select>
+      </label>
+
+      <button id="run" class="btn primary">开始变清晰</button>
+      <button id="download" class="btn" disabled>下载结果 PNG</button>
+      <button id="again" class="btn ghost">换一张图</button>
+
+      <div class="progress" id="progress" hidden>
+        <div class="bar"><i id="bar"></i></div>
+        <p id="ptext">准备中…</p>
+      </div>
+      <p class="err" id="err" hidden></p>
+    </aside>
+  </section>
+</main>
+
+<footer>
+  <p>模型：<a href="https://github.com/xinntao/Real-ESRGAN" target="_blank" rel="noreferrer">Real-ESRGAN</a>
+    x4v3 / x4plus（BSD-3-Clause）· 推理：ONNX Runtime Web（WebGPU 优先，回退 WebAssembly）</p>
+  <p>模型只在第一次使用时下载，之后缓存在本地浏览器；图片始终留在你的设备上。</p>
+</footer>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
