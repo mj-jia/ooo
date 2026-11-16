@@ -1,0 +1,11 @@
+# 模型侧依赖。前端页面不需要任何 Python 依赖，见根目录 requirements.txt
+#
+# 装 CPU 版（只做结构自检、推理）：
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# 装 CUDA 版（要微调）：
+#   pip install torch --index-url https://download.pytorch.org/whl/cu118
+torch>=2.1
+
+# 导出 ONNX 时才需要，可选
+# onnx>=1.16
+# onnxruntime>=1.18
