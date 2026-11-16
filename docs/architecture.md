@@ -1,6 +1,6 @@
 # 架构与实现
 
-页面没有构建步骤，三个文件直接以原生 ES module 运行：`index.html` + `src/style.css` + `src/app.js`，推理交给 `vendor/` 里预构建的 ONNX Runtime Web。
+页面没有构建步骤，三个文件直接以原生 ES module 运行：`index.html` + `style.css` + `app.js`，推理交给 `vendor/` 里预构建的 ONNX Runtime Web。`src/` 是 Python 侧（模型结构），页面不引用它，两者只通过 `models/*.onnx` 交接。
 
 ```
 用户拖图
@@ -20,7 +20,7 @@ upscale()                       逐块推理，写进一张 ImageData
 canvas 显示 / 对比滑块 / toBlob 导出 PNG
 ```
 
-## src/app.js 的四段
+## app.js 的四段
 
 | 段落 | 职责 |
 | --- | --- |

@@ -1,8 +1,8 @@
 {
   "name": "ooo-image-upscaler",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
-  "description": "浏览器端 Real-ESRGAN 4 倍放大工具：纯前端 ONNX Runtime Web 推理，图片不出本机",
+  "description": "浏览器端 Real-ESRGAN 4 倍放大工具：纯前端 ONNX Runtime Web 推理，图片不出本机；附模型侧结构代码与权重下载",
   "type": "module",
   "homepage": "https://mj-jia.github.io/ooo/",
   "repository": {
@@ -14,10 +14,12 @@
     "node": ">=20"
   },
   "scripts": {
-    "serve": "python -m http.server 8123 --bind 127.0.0.1",
+    "serve": "python serve.py 8123",
     "verify": "node tools/verify.mjs",
     "test": "node tools/e2e.mjs",
-    "models": "python tools/inspect_model.py"
+    "models": "python tools/inspect_model.py",
+    "weights": "python tools/fetch_official_weights.py",
+    "arch": "python tools/check_arch.py"
   },
   "devDependencies": {
     "puppeteer-core": "^25.17.0"

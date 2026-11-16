@@ -1,5 +1,14 @@
-# 仅 tools/*.py 需要，页面本身不需要任何 Python 依赖
+# 页面本身（index.html + app.js）不需要任何 Python 依赖，下列只给 tools/*.py 与 src/ 用。
+#
+#   pip install -r requirements.txt
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu   # 只有结构自检需要
+#
+# torch 没有写进本文件：默认 PyPI 版在 Windows 上是 CUDA 构建，装下来 2.5 GB，
+# 而 tools/check_arch.py 只做 CPU 前向，装 CPU 版（约 200 MB）就够。
 onnx>=1.16
 onnxruntime>=1.18
 numpy>=1.26
 pillow>=10.0
+
+# 以下脚本额外需要 torch>=2.1：
+#   src/models/srvgg.py、src/models/srvgg_official.py、tools/check_arch.py

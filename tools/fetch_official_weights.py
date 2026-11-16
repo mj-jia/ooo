@@ -1,10 +1,10 @@
-"""下载 Real-ESRGAN 官方权重到 training/weights/ 目录。
+"""下载 Real-ESRGAN 官方权重到 weights/ 目录。
 
 用法（在仓库根目录执行）：
-    python training/tools/fetch_official_weights.py                  # 下 x4v3 + wdn-x4v3（官方默认组合）
-    python training/tools/fetch_official_weights.py --all            # 下全部
-    python training/tools/fetch_official_weights.py realesr-animevideov3
-    python training/tools/fetch_official_weights.py --verify         # 下完顺带校验结构
+    python tools/fetch_official_weights.py                  # 下 x4v3 + wdn-x4v3（官方默认组合）
+    python tools/fetch_official_weights.py --all            # 下全部
+    python tools/fetch_official_weights.py realesr-animevideov3
+    python tools/fetch_official_weights.py --verify         # 下完顺带校验结构
 
 为什么要下两个：官方 `realesr-general-x4v3` 默认 `--denoise_strength 0.5`，
 推理时是把 x4v3 与 wdn-x4v3 两组权重按 [0.5, 0.5] 线性混合后跑一份网络（DNI）。
@@ -22,7 +22,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]  # training/
+ROOT = Path(__file__).resolve().parents[1]  # 仓库根目录
 WEIGHTS = ROOT / "weights"
 BASE = "https://github.com/xinntao/Real-ESRGAN/releases/download"
 

@@ -7,8 +7,8 @@
   4. 官方权重能按 key + 形状过滤后载入改造版，并列出被丢弃的那一层
 
 用法（在仓库根目录执行）：
-    python training/tools/check_arch.py
-    python training/tools/check_arch.py --weights training/weights/realesr-general-x4v3.pth
+    python tools/check_arch.py
+    python tools/check_arch.py --weights weights/realesr-general-x4v3.pth
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ import argparse
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]  # training/
+ROOT = Path(__file__).resolve().parents[1]  # 仓库根目录
 sys.path.insert(0, str(ROOT))
 
 try:

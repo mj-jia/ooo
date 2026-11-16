@@ -72,8 +72,8 @@ function collectRefs(source, pattern) {
 
 const checks = [
   { from: 'index.html', pattern: /(?:href|src)="\.\/([^"]+)"/g },
-  { from: 'src/app.js', pattern: /from\s+'\.\.?\/([^']+)'/g },
-  { from: 'src/app.js', pattern: /url:\s*'\.\/([^']+)'/g },
+  { from: 'app.js', pattern: /from\s+'\.\.?\/([^']+)'/g },
+  { from: 'app.js', pattern: /url:\s*'\.\/([^']+)'/g },
 ];
 
 console.log('\n页面引用的资源');
@@ -94,7 +94,7 @@ for (const { from, pattern } of checks) {
 /* ---------- 3. 前端配置与 manifest 是否对得上 ---------- */
 console.log('\n前端配置');
 
-const appSource = fs.readFileSync(path.join(ROOT, 'src/app.js'), 'utf8');
+const appSource = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
 const urlToModel = new Map(
   manifest.models.map((m) => [`./models/${m.file}`, m])
 );
@@ -103,7 +103,7 @@ for (const [ref, model] of urlToModel) {
   const re = new RegExp(`url:\\s*'${ref.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'[\\s\\S]{0,400}?input:\\s*'([^']+)'`);
   const hit = appSource.match(re);
   if (!hit) {
-    bad(`src/app.js 里没有引用 ${ref}`);
+    bad(`app.js 里没有引用 ${ref}`);
     continue;
   }
   if (hit[1] === model.input.name) {

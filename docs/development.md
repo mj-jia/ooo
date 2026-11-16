@@ -7,10 +7,14 @@
 必须经 HTTP 打开，双击 `index.html` 会失败（ES module 与 `fetch` 在 `file://` 下被浏览器拦住）：
 
 ```bash
-npm run serve
-# 或：python -m http.server 8123 --bind 127.0.0.1
+npm run serve                    # = python serve.py 8123
+python serve.py 8000             # 换端口
 # 浏览器打开 http://127.0.0.1:8123/
 ```
+
+`serve.py` 会带上 `Cross-Origin-Opener-Policy` / `Cross-Origin-Embedder-Policy` 两个响应头。有了它们浏览器才启用 `SharedArrayBuffer`，onnxruntime-web 才能走多线程 WASM，本地调试速度能快 3~4 倍。
+
+代价是**本地比线上快**：GitHub Pages 设不了这两个头，线上 WASM 后端固定单线程。拿本地数据跟线上比会误判。
 
 ## 校验仓库自洽性
 
@@ -18,7 +22,7 @@ npm run serve
 npm run verify
 ```
 
-检查三件事：模型与运行时文件的 sha256 是否与 `models/manifest.json` 一致、`index.html` / `src/app.js` 引用的资源是否真实存在、`app.js` 里写死的输入节点名是否与 manifest 对得上。
+检查三件事：模型与运行时文件的 sha256 是否与 `models/manifest.json` 一致、`index.html` / `app.js` 引用的资源是否真实存在、`app.js` 里写死的输入节点名是否与 manifest 对得上。
 不依赖浏览器，纯 Node，几十毫秒跑完，适合挂到 CI 或 pre-push 钩子。
 
 ## 端到端测试
@@ -49,7 +53,7 @@ python tools/reference_run.py                                    # 内置测试�
 python tools/reference_run.py photo.jpg -m models/realesr-general-x4v3.onnx -o ref.png
 ```
 
-`reference_run.py` 复刻了 `src/app.js` 里同一套切块、反射补边、裁边距逻辑，用来对拍。
+`reference_run.py` 复刻了 `app.js` 里同一套切块、反射补边、裁边距逻辑，用来对拍。
 
 **对拍结果**（同一张 128×128 输入、同一个 x4v3 模型，浏览器输出 vs Python 输出）：
 
@@ -84,7 +88,7 @@ jobs:
           node-version: 20
       - name: 语法检查
         run: |
-          node --check src/app.js
+          node --check app.js
           node --check tools/verify.mjs
           node --check tools/e2e.mjs
       - name: 校验模型与资源
@@ -107,13 +111,13 @@ Pages 无法设置 `COOP` / `COEP` 响应头，因此 WASM 后端固定单线程
 用 `file://` 打开了。起本地服务。
 
 **控制台报 `no available backend found` 或 wasm 404**
-`ort.env.wasm.wasmPaths` 没指对。`src/app.js` 里是 `new URL('../vendor/', import.meta.url)`，移动 `app.js` 位置时要一起改。
+`ort.env.wasm.wasmPaths` 没指对。`app.js` 里是 `new URL('./vendor/', import.meta.url)`，移动 `app.js` 位置时要一起改。
 
 **推理结果周围有一圈暗边**
 镜像反射补边失效了（`reflect()` 被改成补 0）。块边缘会看到暗框。
 
 **换了模型但页面还是旧结果**
-模型走 Cache Storage，缓存名是 `upsr-model-v2`。改 `src/app.js` 里的缓存名版本号，或在 DevTools → Application → Storage 里清掉。
+模型走 Cache Storage，缓存名是 `upsr-model-v2`。改 `app.js` 里的缓存名版本号，或在 DevTools → Application → Storage 里清掉。
 
 **线上第一次打开要等很久**
 模型和 WASM 运行时从 `github.io` 拉，国内通常一百多 KB/s。第二次打开命中缓存后正常。

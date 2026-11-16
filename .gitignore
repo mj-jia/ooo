@@ -10,6 +10,11 @@ __pycache__/
 .venv/
 venv/
 
+# 官方权重（单个约 64 MB，由 tools/fetch_official_weights.py 下载，不进版本库）
+weights/
+*.pth
+*.part
+
 # 系统文件
 .DS_Store
 Thumbs.db
